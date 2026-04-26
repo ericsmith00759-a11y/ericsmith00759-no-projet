@@ -3,46 +3,43 @@ package main
 import (
 	"fmt"
 	"os"
-	"github.com/sbinet/go-python"
+	// Tu pointes maintenant vers TON dossier que l'on vient de classer
+	"./bridge" 
 )
 
 func init() {
-	// Initialisation du lien de sang entre Go et Python
-	err := python.Initialize()
+	// Initialisation du moteur via ton dossier bridge
+	err := bridge.Initialize() 
 	if err != nil {
-		panic("🔥 [ERREUR CRITIQUE] Le bridge Go-Python refuse de démarrer !")
+		panic("🔥 [ERREUR] Le moteur dans /bridge refuse de s'allumer !")
 	}
 }
 
 func main() {
 	fmt.Println("🚀 [MAIN PAVÉ] Démarrage de la Submersion sur 32 Coeurs...")
 	
-	// Importation de ton intelligence de cybersécurité (d3amon_logic.py)
-	logic := python.PyImport_ImportModule("d3amon_logic")
+	// Ton cerveau Python reste à côté du main.go
+	logic := bridge.PyImport_ImportModule("d3amon_logic")
 	if logic == nil {
-		fmt.Println("❌ Erreur : d3amon_logic.py doit être au même endroit que main.go")
+		fmt.Println("❌ Erreur : d3amon_logic.py est introuvable à la racine.")
 		os.Exit(1)
 	}
 
-	// BOUCLE DE FORCE : Scan infini du mempool
 	for {
-		// On récupère le flux de 4 Go
+		// Simulation du flux de 4 Go
 		cacheData := "DATA_FLUX_BURN_1111" 
 
-		// Appel du cerveau Python pour le triage
-		pyCache := python.PyString_FromString(cacheData)
+		pyCache := bridge.PyString_FromString(cacheData)
+		// Le cerveau Python analyse et décide du "Vomi"
 		decision := logic.CallMethod("analyze_and_merge", pyCache)
 
-		if decision != nil && python.PyString_AsString(decision) == "SUBMERSION" {
-			// LE MOMENT DE VÉRITÉ
-			fmt.Println("🌊 [FORCE RELOAD] Seuil de 4 Go atteint. On entre dans le bateau !")
-			
-			// Ici, l'ordre de transfert vers ton Master Wallet
+		if decision != nil && bridge.PyString_AsString(decision) == "SUBMERSION" {
+			fmt.Println("🌊 [FORCE RELOAD] Seuil de 4 Go atteint. On vide le cache !")
 			confirmMerge()
 		}
 	}
 }
 
 func confirmMerge() {
-	fmt.Println("💰 [MONTANT DE FOU] Transfert validé. ✓ ✓")
+	fmt.Println("💰 [MONTANT DE FOU] Transfert validé vers Master Wallet. ✓")
 }
